@@ -1,0 +1,18 @@
+<!-- users/templates/users/detection_live.html -->
+
+<h2>📡 Real-Time Packet Anomaly Detection</h2>
+<div id="results"></div>
+
+<script>
+const socket = new WebSocket('ws://' + window.location.host + '/ws/detect/');
+
+socket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = `
+        <p><strong>Bayesian Accuracy:</strong> ${data.bayesian}%</p>
+        <p><strong>LSH Accuracy:</strong> ${data.lsh}%</p>
+        <p><strong>Avg Packet Size:</strong> ${data.avg_len} bytes</p>
+        <hr/>` + resultsDiv.innerHTML;
+};
+</script>

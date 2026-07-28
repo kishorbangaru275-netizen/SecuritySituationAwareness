@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contents %}
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Nunito', sans-serif;
+        background-color: #0f172a; /* deep slate */
+        margin: 0;
+        padding: 0;
+    }
+
+    main.container {
+        min-height: 90vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+    }
+
+    .form-wrapper {
+        width: 100%;
+        max-width: 700px;
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding: 2rem 2.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        color: #1e293b;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        row-gap: 1.2rem;
+        column-gap: 1.5rem;
+    }
+
+    label {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: #334155;
+        align-self: center;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+        width: 100%;
+        padding: 12px 14px;
+        font-size: 1rem;
+        border: 2px solid #cbd5e1;
+        border-radius: 10px;
+        background-color: #f9fafb;
+        transition: all 0.3s ease-in-out;
+    }
+
+    input:focus,
+    textarea:focus {
+        outline: none;
+        border-color: #6366f1;
+        box-shadow: 0 0 5px rgba(99, 102, 241, 0.5);
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
+
+    .form-actions {
+        grid-column: span 2;
+        text-align: center;
+        margin-top: 1.5rem;
+    }
+
+    button[type="submit"] {
+        padding: 12px 28px;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #fff;
+        background-color: #6366f1;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+        background-color: #4f46e5;
+        transform: translateY(-2px);
+    }
+
+    button:active {
+        transform: translateY(0);
+    }
+
+    .message-error {
+        margin-top: 1rem;
+        color: #b91c1c;
+        background-color: #fee2e2;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid #fecaca;
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 640px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-actions {
+            grid-column: span 1;
+        }
+    }
+</style>
+
+<main class="container">
+    <div class="form-wrapper">
+        <h1>User Registration Form</h1>
+
+        <form action="{% url 'UserRegisterActions' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-grid">
+                <label for="{{ form.name.id_for_label }}">User Name</label>
+                {{ form.name }}
+
+                <label for="{{ form.loginid.id_for_label }}">Login ID</label>
+                {{ form.loginid }}
+
+                <label for="{{ form.password.id_for_label }}">Password</label>
+                {{ form.password }}
+
+                <label for="{{ form.mobile.id_for_label }}">Mobile</label>
+                {{ form.mobile }}
+
+                <label for="{{ form.email.id_for_label }}">Email</label>
+                {{ form.email }}
+
+                <label for="{{ form.locality.id_for_label }}">Locality</label>
+                {{ form.locality }}
+
+                <label for="{{ form.address.id_for_label }}">Address</label>
+                {{ form.address }}
+
+                <label for="{{ form.city.id_for_label }}">City</label>
+                {{ form.city }}
+
+                <label for="{{ form.state.id_for_label }}">State</label>
+                {{ form.state }}
+
+                {{ form.status }}
+
+                <div class="form-actions">
+                    <button type="submit">Register</button>
+                </div>
+
+                {% if messages %}
+                <div class="message-error">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}
